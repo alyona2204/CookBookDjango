@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  # The application
+  app:
+    build:
+      context: .
+    command: >
+      sh -c "python3 manage.py migrate &&
+             python3 manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - ./cook_book:/app
+    env_file:
+      - .env
+    links:
+      - db
+    depends_on:
+      - db
+
+  # Database
+  db:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - ${PORT_DB}:5432

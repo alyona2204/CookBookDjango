@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Рецепты</title>
+</head>
+<body>
+{% block content %}
+    {% if not data %}
+    {% include 'none_info.html' %}
+    {% endif %}
+    {% for item in data %}
+        <h1><div>{{ item.name }}</div></h1>
+{% for ing in item.recipes_set.all %}
+    <h4><div>{{ ing.ingredient.name }}
+    {{ ing.count }}
+    {{ ing.unit.name }} | </div> </h4>
+{% endfor %}
+    <div><body><p align="justify">{{item.comments}}</p></body>
+    </div>
+    {% endfor %}
+{% endblock %}
+</body>
+</html>

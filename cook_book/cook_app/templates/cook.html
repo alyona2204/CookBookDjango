@@ -1,0 +1,36 @@
+{% extends 'template.html' %}
+{% block form %}
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div class="form-group">
+            {{ form.cook_name }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Найти</button>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div><h4> Выберите ингредиент, чтобы узнать блюдо </h4></div>
+        {% for x in ingredients %}
+        <a href="?CookNameSearchForm-ingr_id={{x.id}}">{{x.name}}</a>,
+        {% endfor %}
+    </div>
+    <a href="?">Сбросить</a>
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+    {% if not data %}
+    {% include 'none_info.html' %}
+    {% endif %}
+    {% for item in data %}
+<a href="/{{item.id }}/"><article><b><ul><li>{{ item.name }}</li></ul></b></article></a>
+<br>
+    {% endfor %}
+{% endblock %}
